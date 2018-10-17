@@ -25,12 +25,23 @@ module.exports = function (RED) {
                             isOn = value.on && value.on == true;
                         }
 
+                        var api_call_sevice_output = null;
+                        if(config.entityId){
+                            api_call_sevice_output = {
+                                payload: {
+                                    domain: "switch",
+                                    service: isOn ? "turn_on" : "turn_off",
+                                    data: {
+                                        entity_id : config.entityId
+                                    }
+                                }
+                            };
+                        }
+
                         node.send([
-                            {
-                                payload: isOn ? "on" : "off",
-                            },{
-                                payload: isOn ? 1 : 0
-                            }    
+                          isOn ? null : { payload : 1},
+                          isOn ? { payload : 1} : null,
+                          api_call_sevice_output
                         ]);
                     }
                 }else{

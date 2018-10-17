@@ -5,9 +5,10 @@
         defaults: {
             name: {value:""},
             deviceId: {value: '', required:true },
+            entityId: { value: ''}
         },
         inputs: 1,
-        outputs:2,
+        outputs:3,
         icon: "sync.png",
         label: function() {
             return this.name || "Sinric Switch";
@@ -25,8 +26,15 @@
         <label for="node-input-deviceId"><i class="icon-tag"></i> Device ID</label>
         <input type="text" id="node-input-deviceId" placeholder="Device ID">
     </div>
+    <div class="form-row">
+        <label for="node-input-entityId"><i class="icon-tag"></i> Home Assistant Entity ID</label>
+        <input type="text" id="node-input-entityId" placeholder="switch.test_switch">
+    </div>
 </script>
 
 <script type="text/x-red" data-help-name="sinric-switch">
-    <p>This selectively pass any event that matches the `deviceId` configured for this node with OnOff/SetPowerState event.</p>
+    <p>This node selectively pass any event that matches the `deviceId` configured for this node with OnOff/SetPowerState event. Also, the 
+        third output, if `Entity ID` is defined, will output a `api-call-service` compatible payload that
+        you can directly send to `api-call-service` node of `node-red-contrib-home-assistant`.
+    </p>
 </script>
