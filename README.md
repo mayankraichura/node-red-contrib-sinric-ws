@@ -3,10 +3,10 @@
 **Disclaimer: I'm not the creater of Sinric. That credit goes to awesome Aruna Tennakoon (@kakopappa). You will find the original Sinric repo [here](https://github.com/kakopappa/sinric)**.
 
 # About Sinric
-[Sinric](https://sinric.com) is platform that helps you to integrate your existing devices (such as RaspberryPi, ESP8226, ESP32 or Arduino) with Amazon Alexa or Google Home for FREE! It has a native Alexa Smart Home skill that you can link with in Alexa app or, with a bit of efforts, be able able to link it to your Google Home/Assistant app. What's special about this platform is that you don't have to open up any ports in firewall and no messy router configuration. 
+[Sinric](https://sinric.com) is a platform that helps you to integrate your existing devices (such as RaspberryPi, ESP8226, ESP32 or Arduino) with Amazon Alexa or Google Home for **FREE**! It has a native Alexa Smart Home skill that you can link with in Alexa app or, with a bit of efforts, be able able to link it to your Google Home/Assistant app. What's special about this platform is that **you don't have to open up any ports in firewall and no messy router configuration**. 
 
 # About This Module
-The features of Sinric makes it ideal for open-source home-automation platforms such as Home Assistnat, Domoticz etc. Sinric platform requires that the communication be done via websocket with special headers containing the API key. However, the native websocket implementation of Node Red does not allow configuration of additional headers and I've created this simple nodes that wrap all the complexity into two simple nodes.
+The features of Sinric makes it ideal for open-source home-automation platforms such as Home Assistant, Domoticz etc. Sinric platform requires that the communication be done via websocket with special headers containing the API key. However, the native websocket implementation of Node Red does not allow configuration of additional headers and I've created this simple nodes that wrap all the complexity into two simple nodes.
 
 ### `Sinric` node 
 This node is just a wrapper around nodejs websocket library with some reconnection code to make it reliable. It outputs anything that it receives from the sinric platform.
@@ -26,3 +26,9 @@ This node takes one input and three outputs. Ideally it expects the output of th
  - Run the following command:
    - `npm install mayankraichura/node-red-contrib-sinric-ws`
  - Restart Node-Red.
+
+# TODO
+### Refactoring
+This is my first ever Node Red module and so it has some rough edges. Specifically, the `websocket` implementation is wrapped inside the `Sinric` node. I plan to extract that to a `config` node acting as proxy for all the remaining ndoes.
+### Add support for status feedback
+At this point, there is no support to report the state of the devices back to Sinric and by extension to Alexa/Google Assistant. Sinric will try to remember the last state it had executed but would be oblivious of any external state changes (eg. MQTT, manual switching etc). Sinric has some level of support to report back this state changes and need to be implemented in near future.
