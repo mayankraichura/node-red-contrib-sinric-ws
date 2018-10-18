@@ -21,7 +21,11 @@ module.exports = function (RED) {
 
             client.onopen = function(event){
                 node.log('[RWS] Connected');
-                node.status({text: 'Connected'});
+                node.status({
+                    text: 'Connected',
+                    fill: "green",
+                    shape: "dot"
+                });
             };
 
             client.onmessage = function(event){

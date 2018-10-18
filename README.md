@@ -13,7 +13,7 @@ This node is just a wrapper around nodejs websocket library with some reconnecti
 
 ### `Sinric Switch` node
 This node takes one input and three outputs. Ideally it expects the output of the `Sinric` node as input and a `Device ID` as configuration parameter. It will look for `On/Off` command and if it receives one for the specified device, based on command, it will have following output states.
- - Output 1: It will output `1` if a switch off command is received. Otherwise, no output.
+ - Output 1: It will output `1` if a switch **OFF** command is received. Otherwise, no output.
  - Output 2: It will output `1` if a switch **ON** command is received. Otherwise, no output.
  - Output 3: This output was specifically written with Home Assistant in mind (`AYapejian/node-red-contrib-home-assistant` to be exact) and outputs a JSON object that can be directly consumed by `Call Service`.
 

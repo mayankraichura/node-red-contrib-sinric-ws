@@ -9,21 +9,10 @@ module.exports = function (RED) {
 
                 if(msg && msg.payload && msg.payload.deviceId){
                     if(msg.payload.deviceId == config.deviceId){
+                        msg.original_payload = msg.payload;
+
                         var action = msg.payload.action;
                         var value = msg.payload.value;
-
-                        var isOn = false;
-
-
-                        if(action == "setPowerState"){
-                            //Alexa command
-                            isOn = value == "ON";
-                        }
-
-                        if(action == "action.devices.commands.OnOff"){
-                            //Google Assistant command
-                            isOn = value.on && value.on == true;
-                        }
 
                         var api_call_sevice_output = null;
                         if(config.entityId){
