@@ -32,3 +32,14 @@ This node takes one input and three outputs. Ideally it expects the output of th
 This is my first ever Node Red module and so it has some rough edges. Specifically, the `websocket` implementation is wrapped inside the `Sinric` node. I plan to extract that to a `config` node acting as proxy for all the remaining ndoes.
 ### Add support for status feedback
 At this point, there is no support to report the state of the devices back to Sinric and by extension to Alexa/Google Assistant. Sinric will try to remember the last state it had executed but would be oblivious of any external state changes (eg. MQTT, manual switching etc). Sinric has some level of support to report back this state changes and need to be implemented in near future.
+### Add more devices support.
+Sinric platform has support for lots of device types and I've only implemented a `Switch` type. Slowly, I plan to add support for additional devices supported by Sinric. Here is the list of device types supported by Sinric. I'll cross them off as I implement them in this module.
+
+- ~~Switch~~
+- Light (Working on it)
+- Thermostat
+- Window Shutters
+- TV
+- Speaker
+- Smart Lock
+- Projector
