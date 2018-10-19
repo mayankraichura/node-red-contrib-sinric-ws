@@ -9,8 +9,12 @@
   "license": "GPL-3.0",
   "node-red": {
     "nodes": {
-      "sinric": "sinric.js",
-      "sinric-switch": "sinric-switch.js"
+      "sinric-ws-client": "nodes/sinric-ws-client/sinric-ws-client.js",
+      "sinric-debugger": "nodes/sinric-debugger/sinric-debugger.js",
+      "sinric-switch": "nodes/sinric-switch/sinric-switch.js",
+      "sinric-write": "nodes/sinric-write/sinric-write.js",
+      "sinric-ha-setpowerstate": "nodes/sinric-ha-setpowerstate/sinric-ha-setpowerstate.js",
+      "sinric-light": "nodes/sinric-light/sinric-light.js"
     }
   },
   "dependencies": {

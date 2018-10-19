@@ -1,0 +1,76 @@
+<script type="text/javascript">
+    RED.nodes.registerType('sinric-switch', {
+        category: 'sinric',
+        paletteLabel: 'Switch',
+        color: '#378BBA',
+        defaults: {
+            name: {
+                value: ""
+            },
+            deviceId: {
+                value: '',
+                required: true
+            },
+            entityId: {
+                value: ''
+            },
+            idx: {
+                value: ''
+            },
+            client: {
+                type: "sinric-ws-client",
+                required: true
+            }
+        },
+        outputs: 4,
+        icon: "mdi-plug.png",
+        label: function () {
+            return this.name || "Sinric Switch";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="sinric-switch">
+    <div class="form-row" id="websocket-client-row">
+        <label for="node-input-client"><i class="fa fa-bookmark"></i> <span>Connection</span></label>
+        <input type="text" id="node-input-client">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-deviceId"><i class="icon-tag"></i> Device ID</label>
+        <input type="text" id="node-input-deviceId" placeholder="Device ID">
+    </div>
+
+
+    <div class="form-row">
+        <label for="node-input-entityId"><i class="icon-tag"></i> HASS Entity ID</label>
+        <input type="text" id="node-input-entityId" placeholder="switch.test_switch">
+    </div>
+
+    <div class="form-row">
+            <label for="node-input-idx"><i class="icon-tag"></i> IDX</label>
+            <input type="text" id="node-input-idx" placeholder="10">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="sinric-switch">
+    <p>
+        This node will trigger outputs whenever an On/Off command is received from
+        Alexa/Google Assistant and is suitable with switchable devices such as Smart Plug, Switch etc.
+    </p><p>
+        The first two outputs are general purpose outputs and will have mutually exclusive
+        output based on On/Off command received. If an Off command is received, the first port 
+        will have 1 as output. If an On command is received, the second port will have 1 as output.
+    </p><p>
+        The third port is for Home Assistant users. It emits a specially crafted JSON payload that can be consumed by 
+        <code>node-red-contrib-home-assistant</code>'s Call Service node. To use this,
+        you'll have to configure the Entity ID of this node.
+    </p><p>
+        The fourth port is Domoticz users. It emits a specially crafted JSON payload that you 
+        can send to an MQTT node with topic set as <code>domoticz/in</code>.
+    </p>
+</script>

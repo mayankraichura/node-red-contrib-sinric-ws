@@ -1,0 +1,34 @@
+<script type="text/javascript">
+    RED.nodes.registerType('sinric-debugger',{
+        category: 'sinric',
+        paletteLabel: 'Debugger',
+        color: '#378BBA',
+        defaults: {
+            name: {value:""},
+            client: {type:"sinric-ws-client", required:true }
+        },
+        outputs:1,
+        icon: "serial.png",
+        label: function() {
+            return this.name || "Sinric Debugger";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="sinric-debugger">
+    <div class="form-row" id="websocket-client-row">
+        <label for="node-input-client"><i class="fa fa-bookmark"></i> <span>Connection</span></label>
+        <input type="text" id="node-input-client">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div> 
+</script>
+
+<script type="text/x-red" data-help-name="sinric-debugger">
+    <p>
+        The purpose of this node is to output all the messages received by the websocket and 
+        make it available on the output port. You can connect debug node to it.
+    </p>
+</script>

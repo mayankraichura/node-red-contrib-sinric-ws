@@ -1,0 +1,40 @@
+<script type="text/javascript">
+    RED.nodes.registerType('sinric-write', {
+        category: 'sinric',
+        paletteLabel: 'Sinric Write',
+        color: '#378BBA',
+        defaults: {
+            name: {
+                value: ""
+            },
+            client: {
+                type: "sinric-ws-client",
+                required: true
+            }
+        },
+        inputs: 1,
+        outputs: 0,
+        icon: "globe.png",
+        label: function () {
+            return this.name || "Sinric Write";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="sinric-write">
+    <div class="form-row" id="websocket-client-row">
+        <label for="node-input-client"><i class="fa fa-bookmark"></i> <span>Connection</span></label>
+        <input type="text" id="node-input-client">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="sinric-write">
+    <p>
+        This node will write anything that it receives as input to the 
+        websocket stream of Sinric.
+    </p>
+</script>

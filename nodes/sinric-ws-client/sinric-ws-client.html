@@ -1,0 +1,34 @@
+<script type="text/javascript">
+    RED.nodes.registerType('sinric-ws-client',{
+        category: 'config',
+        color: '#378BBA',
+        defaults: {
+            name: {value: ''},
+            key: {value: '', required:true },
+        },
+        inputs: 0,
+        outputs: 0,
+        icon: "serial.png",
+        label: function() {
+            return this.name || "Sinric";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="sinric-ws-client">
+    <div class="form-row">
+        <label for="node-config-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-config-input-name" placeholder="Name">
+    </div>
+
+    <div class="form-row">
+        <label for="node-config-input-key"><i class="icon-tag"></i> API Key</label>
+        <input type="text" id="node-config-input-key" placeholder="API Key">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="sinric-ws-client">
+    <p>This is the configuration node for the Sinric platform. Only API key is mandatory for 
+        this node to work.
+    </p>
+</script>

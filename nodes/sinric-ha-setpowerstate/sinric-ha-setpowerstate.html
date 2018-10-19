@@ -1,0 +1,49 @@
+<script type="text/javascript">
+    RED.nodes.registerType('sinric-ha-setpowerstate', {
+        category: 'sinric',
+        paletteLabel: 'HA Send Switch Status',
+        color: '#378BBA',
+        defaults: {
+            name: {
+                value: ""
+            },
+            deviceId: {
+                value: '',
+                required: true
+            },
+            entityId: {
+                value: ''
+            },
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "mdi-plug.png",
+        label: function () {
+            return this.name || "Sinric HA Send Switch Status";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="sinric-ha-setpowerstate">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-deviceId"><i class="icon-tag"></i> Device ID</label>
+        <input type="text" id="node-input-deviceId" placeholder="Device ID">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-entityId"><i class="icon-tag"></i> HASS Entity ID</label>
+        <input type="text" id="node-input-entityId" placeholder="switch.test_switch">
+    </div>  
+</script>
+
+<script type="text/x-red" data-help-name="sinric-ha-setpowerstate">
+    <p>
+        This node will generate a JSON to set the state of device configured 
+        with the DeviceID based on the input from <code>node-red-contrib-home-assistant</code>.
+    </p>
+</script>
