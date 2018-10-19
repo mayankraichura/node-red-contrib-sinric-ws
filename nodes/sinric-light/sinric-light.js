@@ -8,8 +8,17 @@ module.exports = function (RED) {
         this.deviceId = config.deviceId;
         this.entityId = config.entityId;
         this.client = config.client;
-        this.sirnricClient = RED.nodes.getNode(this.client);
+        this.sinricClient = RED.nodes.getNode(this.client);
 
+        if(this.sinricClient){
+            this.sinricClient.RegisterNode(this);
+        }
+
+        this.on("close", function () {
+            if (this.sinricClient) {
+                this.sinricClient.RemoveNode(this);
+            }
+        });
     }
 
     RED.nodes.registerType("sinric-light", SinricLightNode);
@@ -131,8 +140,5 @@ module.exports = function (RED) {
                 null /* Domoticz not yet supported */
             ]);
         }
-
-
     };
-
 };
