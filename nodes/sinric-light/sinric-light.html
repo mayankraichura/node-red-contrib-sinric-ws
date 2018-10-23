@@ -1,34 +1,34 @@
 <script type="text/javascript">
-    RED.nodes.registerType('sinric-light', {
-        category: 'sinric',
-        paletteLabel: 'Light',
-        color: '#378BBA',
-        defaults: {
-            name: {
-                value: ""
-            },
-            deviceId: {
-                value: '',
-                required: true
-            },
-            entityId: {
-                value: ''
-            },
-            client: {
-                type: "sinric-ws-client",
-                required: true
-            }
-        },
-        outputs: 4,
-        icon: "mdi-light-bulb.png",
-        label: function () {
-            return this.name || "Sinric Light";
-        }
-    });
+  RED.nodes.registerType('sinric-light', {
+    category: 'sinric',
+    paletteLabel: 'Light',
+    color: '#378BBA',
+    defaults: {
+      name: {
+        value: ""
+      },
+      deviceId: {
+        value: '',
+        required: true
+      },
+      entityId: {
+        value: ''
+      },
+      client: {
+        type: "sinric-ws-client",
+        required: true
+      }
+    },
+    outputs: 4,
+    icon: "mdi-light-bulb.png",
+    label: function () {
+      return this.name || "Sinric Light";
+    }
+  });
 </script>
 
 <script type="text/x-red" data-template-name="sinric-light">
-    <div class="form-row" id="websocket-client-row">
+  <div class="form-row" id="websocket-client-row">
         <label for="node-input-client"><i class="fa fa-bookmark"></i> <span>Connection</span></label>
         <input type="text" id="node-input-client">
     </div>
@@ -54,18 +54,43 @@
 </script>
 
 <script type="text/x-red" data-help-name="sinric-switch">
-    <p>
-        This node will trigger outputs whenever an On/Off, Set Brightness, Set Color or Set Color Temperature
-        commands are received from Alexa/Google Assistant. However, Google Assistant supports a subset of this commands and will be handled accordingly.
-    </p><p>
-        The first two outputs are general purpose outputs and will have mutually exclusive
-        output based on On/Off command received. If an Off command is received, the first port 
-        will have 1 as output. If an On command is received, the second port will have 1 as output.
-    </p><p>
-        The third port is for Home Assistant users. It emits a specially crafted JSON payload that can be consumed by 
-        <code>node-red-contrib-home-assistant</code>'s Call Service node. To use this,
-        you'll have to configure the Entity ID of this node. Specifically <code>light.turn_on</code> and <code>light.turn_off</code>
-    </p><p>
-        The fourth port is Domoticz users. It is not supported yet.
-    </p>
+  <p>
+    This node will trigger outputs whenever an On/Off, Set Brightness, Set Color or Set Color Temperature
+    commands are received from Alexa/Google Assistant. However, Google Assistant supports a subset of this commands and will be handled accordingly.
+  </p>
+  <h3>Outputs</h3>
+  <ol class="node-ports">
+    <li>
+      Off Output
+      <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt>
+        <dd>Number 1 if device is switched OFF</dd>
+      </dl>
+    </li>
+    <li>
+      ON Output
+      <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt>
+        <dd>Number 1 if device is switched ON</dd>
+      </dl>
+    </li>
+    <li>
+      Home Assistant
+      <dl class="message-properties">
+        <dt>payload <span class="property-type">JSON | object</span></dt>
+        <dd>Consists a JSON object compatible with <code>Call API Service</code>
+        node of <code>node-red-contrib-home-assistant</code></dd>
+      </dl>
+    </li>
+    <li>
+      Domoticz
+      <dl class="message-properties">
+        <dt>payload <span class="property-type">JSON | object</span></dt>
+        <dd> This output port is reserved for future use with Domoticz home automation system</dd>
+      </dl>
+    </li>
+  </ol>
+  <ul>
+    <li>Hello World</ul>
+  </ul>
 </script>
