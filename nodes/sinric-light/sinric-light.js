@@ -15,6 +15,83 @@ module.exports = function (RED) {
             this.sinricClient.RegisterNode(this);
         }
 
+        this.on("input", function (msg) {
+            if (msg && msg.hasOwnProperty("payload")) {
+                var toSend = {
+                    deviceId: this.deviceId,
+                    action: "setPowerState",
+                    value: null
+                };
+
+                if (msg.payload === "1" || msg.payload === 1) {
+                    toSend.value = "ON";
+                    if (toSend.value) {
+                        node.log("[Sending]" + JSON.stringify(toSend));
+                        node.send(toSend);
+                    }
+                } else if (msg.payload === "0" || msg.payload === 0) {
+                    toSend.value = "OFF";
+                    if (toSend.value) {
+                        node.log("[Sending]" + JSON.stringify(toSend));
+                        node.send(toSend);
+                    }
+                } else {
+                    try {
+                        //Continue if and only if a Home Assistant entity_id is defined.
+                        if (!this.entityId) {
+                            node.warn('No Entity ID is defined. Cannot process this input.');
+                            return; //Nope. Bye. Bye.
+                        }
+
+                        if (msg.topic && msg.topic === "state_changed") {
+                            //This is a state changed message.
+                            if (msg.payload && msg.payload.entity_id && msg.payload.entity_id === this.entityId) {
+                                this.log(JSON.stringify(msg));
+                                this.warn(msg);
+
+                                //OK. We should be handling this event.
+                                //Get the new state
+                                var new_state = msg.payload.event.new_state.state;
+
+                                if (new_state) {
+                                    if (new_state && (new_state === "on" || new_state === "off")) {
+                                        toSend.value = new_state === "on" ? "ON" : "OFF";
+                                    } else {
+                                        node.warn("Invalid event message. Cannot process");
+                                    }
+
+                                    if (toSend.value) {
+                                        node.log("[Sending]" + JSON.stringify(toSend));
+                                        node.send(toSend);
+                                    }
+                                }
+
+                                var attr = msg.payload.event.new_state.attributes;
+                                if(attr){
+                                    var vBri = attr.brightness;
+                                    var vHS = attr.hs_color;
+
+                                    toSend.action = "SetColor";
+                                    toSend.value = {
+                                        hue: Math.floor(vHS[0]),
+                                        saturation: Number.parseFloat((vHS[1] / 100).toFixed(2)),
+                                        brightness: Math.floor(vBri / 2.55)
+                                    };
+
+                                    this.warn(toSend);
+                                    this.log(JSON.stringify(toSend));
+                                }
+
+                                //Check for new color
+                            }
+                        }
+                    } catch (err) {
+                        node.error(err);
+                    }
+                }
+            }
+        });
+
         this.on("close", function () {
             if (this.sinricClient) {
                 this.sinricClient.RemoveNode(this);

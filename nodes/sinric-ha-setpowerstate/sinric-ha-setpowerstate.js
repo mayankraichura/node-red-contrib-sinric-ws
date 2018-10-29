@@ -29,7 +29,7 @@ module.exports = function (RED) {
                        }
                     }
                 }catch(err){
-                    node.console.error(err);
+                    node.error(err);
                 }
             }
         });

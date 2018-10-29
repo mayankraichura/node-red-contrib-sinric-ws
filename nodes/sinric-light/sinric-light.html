@@ -19,6 +19,7 @@
         required: true
       }
     },
+    inputs: 1,
     outputs: 4,
     icon: "mdi-light-bulb.png",
     label: function () {
@@ -53,11 +54,42 @@
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="sinric-switch">
+<script type="text/x-red" data-help-name="sinric-light">
   <p>
     This node will trigger outputs whenever an On/Off, Set Brightness, Set Color or Set Color Temperature
     commands are received from Alexa/Google Assistant. However, Google Assistant supports a subset of this commands and will be handled accordingly.
   </p>
+  <h3>Inputs</h3>
+  <ol class="node-ports">
+    <li>
+      <dl class="message-properties">
+        <dt>payload <span class="property-type">number | string | object</span></dt>
+        <dd>Number 1 if device is switched OFF</dd>
+      </dl>
+    </li>
+    <li>
+      ON Output
+      <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt>
+        <dd>Number 1 if device is switched ON</dd>
+      </dl>
+    </li>
+    <li>
+      Home Assistant
+      <dl class="message-properties">
+        <dt>payload <span class="property-type">JSON | object</span></dt>
+        <dd>Consists a JSON object compatible with <code>Call API Service</code>
+        node of <code>node-red-contrib-home-assistant</code></dd>
+      </dl>
+    </li>
+    <li>
+      Domoticz
+      <dl class="message-properties">
+        <dt>payload <span class="property-type">JSON | object</span></dt>
+        <dd> This output port is reserved for future use with Domoticz home automation system</dd>
+      </dl>
+    </li>
+  </ol>
   <h3>Outputs</h3>
   <ol class="node-ports">
     <li>
@@ -90,7 +122,4 @@
       </dl>
     </li>
   </ol>
-  <ul>
-    <li>Hello World</ul>
-  </ul>
 </script>
