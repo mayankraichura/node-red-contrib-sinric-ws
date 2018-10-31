@@ -127,7 +127,7 @@ module.exports = function (RED) {
 
 
             var action = cmd.action.toString();
-            var value = cmd.value.toString();
+            var value = cmd.value;
             var cmd_type = null;
 
 
@@ -224,6 +224,8 @@ module.exports = function (RED) {
                 }
 
                 if (action === "SetColorTemperature") {
+                    vHue = 0;
+                    vSat = 0;
                     vKel = Number.parseInt(value);
                     isOn = true;
                     cmd_type = "t";
@@ -244,9 +246,11 @@ module.exports = function (RED) {
                     //Color by Alexa
                     //[Alexa] Hue: 0 - 360; Sat: 0.0 - 1.0; Bri: 0.0 - 1.0
                     //[HASS] Hue: 0 - 360; Sat: 0 - 100; Bri: 0 - 255
+                    node.log("Alexa: Set Color");
+                    node.log(JSON.stringify(value));
 
                     //vBri = (value.brightness * 255). toFixed(0);
-                    vHue = (value.hue);
+                    vHue = Number.parseInt(value.hue);
                     vSat = Number.parseInt((value.saturation * 100).toFixed(0));
                     isOn = !( /*vBri === 0 &&*/ vHue === 0 && vSat === 0);
                     cmd_type = "c";
