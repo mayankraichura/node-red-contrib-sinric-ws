@@ -29,24 +29,29 @@ module.exports = function (RED) {
                 } else {
                     try {
                         //Continue if and only if a Home Assistant entity_id is defined.
-                        if (!this.entityId) {
-                            node.warn('No Entity ID is defined. Cannot process this input.');
-                            return; //Nope. Bye. Bye.
+                        if (this.entityId) {
+                            if (msg.topic && msg.topic === "state_changed") {
+                                //This is a state changed message.
+                                if (msg.payload && msg.payload.entity_id && msg.payload.entity_id === this.entityId) {
+                                    //OK. We should be handling this event.
+                                    //Get the new state
+                                    var new_state = msg.payload.event.new_state.state;
+    
+                                    if (new_state) {
+                                        if (new_state && (new_state === "on" || new_state === "off")) {
+                                            toSend.value = new_state === "on" ? "ON" : "OFF";
+                                        } else {
+                                            node.warn("Invalid event message. Cannot process");
+                                        }
+                                    }
+                                }
+                            }
                         }
 
-                        if (msg.topic && msg.topic === "state_changed") {
-                            //This is a state changed message.
-                            if (msg.payload && msg.payload.entity_id && msg.payload.entity_id === this.entityId) {
-                                //OK. We should be handling this event.
-                                //Get the new state
-                                var new_state = msg.payload.event.new_state.state;
-
-                                if (new_state) {
-                                    if (new_state && (new_state === "on" || new_state === "off")) {
-                                        toSend.value = new_state === "on" ? "ON" : "OFF";
-                                    } else {
-                                        node.warn("Invalid event message. Cannot process");
-                                    }
+                        if(this.idx){
+                            if(msg.payload && msg.payload.idx && msg.payload.idx === this.idx){
+                                if(typeof msg.payload.nvalue !== undefined){
+                                    toSend.value = msg.payload.nvalue === 1 ? "ON" : "OFF";
                                 }
                             }
                         }
@@ -57,7 +62,7 @@ module.exports = function (RED) {
 
                 if (toSend.value) {
                     node.log("[Sending]" + JSON.stringify(toSend));
-                    node.send(toSend);
+                    this.sinricClient.Write(JSON.stringify(toSend));
                 }
             }
         });

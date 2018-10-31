@@ -27,13 +27,13 @@ module.exports = function (RED) {
                     toSend.value = "ON";
                     if (toSend.value) {
                         node.log("[Sending]" + JSON.stringify(toSend));
-                        node.send(toSend);
+                        this.sinricClient.Write(JSON.stringify(toSend));
                     }
                 } else if (msg.payload === "0" || msg.payload === 0) {
                     toSend.value = "OFF";
                     if (toSend.value) {
                         node.log("[Sending]" + JSON.stringify(toSend));
-                        node.send(toSend);
+                        this.sinricClient.Write(JSON.stringify(toSend));
                     }
                 } else {
                     try {
@@ -83,6 +83,10 @@ module.exports = function (RED) {
                                 }
 
                                 //Check for new color
+
+                                if(toSend.value){
+                                    this.sinricClient.Write(JSON.stringify(toSend));
+                                }
                             }
                         }
                     } catch (err) {
