@@ -39,6 +39,11 @@ module.exports = function (RED) {
             client.onopen = function(event){
                 node.connected = true;
                 node.log('[RWS] Connected');
+                if(this._handlerNodes){
+                    for(var i = 0; i < node._handlerNodes.length; i++){
+                        node._handlerNodes[i].status({text: "Connected"});
+                    }
+                }
                 // node.status({
                 //     text: 'Connected',
                 //     fill: "green",
